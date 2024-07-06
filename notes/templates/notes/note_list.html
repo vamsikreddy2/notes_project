@@ -1,0 +1,59 @@
+{% extends "notes/base_generic.html" %}
+
+{% block styles %}
+<style>
+    /* Optional: Add some custom styles for pagination */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        padding: 0;
+    }
+    .pagination li {
+        margin: 0 5px;
+    }
+    .pagination a {
+        text-decoration: none;
+        padding: 8px 16px;
+        color: #007bff;
+    }
+    .pagination .active a {
+        font-weight: bold;
+        color: #000;
+    }
+    .pagination .disabled a {
+        color: #ccc;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h2>My Notes</h2>
+    <a href="{% url 'note-create' %}">Create a new note</a>
+    
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for note in notes %}
+          <tr>
+            <td><a href="{% url 'note-detail' note.pk %}">{{ note.title }}</a></td>
+            <td>
+              <a href="{% url 'note-update' note.pk %}">Edit</a> |
+              <a href="{% url 'note-delete' note.pk %}">Delete</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="2">No notes yet. <a href="{% url 'note-create' %}">Create one</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+{% endblock %}
